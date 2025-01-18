@@ -2,33 +2,126 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="blog">
-	<insert id="insert" parameterType="String">
-		<![CDATA[
-			insert into blog(blog_id, title, profile)
-			values (#{blogId}, "블로그 이야기", "/assets/upload-images/spring-logo.jpg")
-		]]>				
-	</insert>
-	
-	<update id="update" parameterType="blogvo">
-		<![CDATA[
-			update blog
-			set title=#{title}, profile=#{profile}
-			where blog_id = #{blogId}
-		]]>					
-	</update>
-	
+	<!-- 블로그 기본 설정 -->
 	<resultMap id="blogResultMap" type="blogvo">
 	    <result property="blogId" column="blog_id" />
 	    <result property="title" column="title" />
 	    <result property="profile" column="profile" />
 	</resultMap>
 
-	<select id="findByBlogId" parameterType="String" resultMap="blogResultMap">
+	<insert id="insertBlog" parameterType="map">
+		<![CDATA[
+			insert into blog(blog_id, title, profile)
+			values (#{blogId}, CONCAT(#{name}, "의 블로그"), "/assets/images/spring-logo.jpg")
+		]]>				
+	</insert>
+	
+	<update id="updateBlog" parameterType="blogvo">
+		<![CDATA[
+			update blog
+			set title=#{title}, profile=#{profile}
+			where blog_id = #{blogId}
+		]]>					
+	</update>
+
+	<select id="findBlogByBlogId" parameterType="String" resultMap="blogResultMap">
 		<![CDATA[
 			select blog_id, title, profile
 			from blog
-			where blog_id=#{blogId}
+			where blog_id = #{blogId}
 		]]>		
 	</select>
+	
+	<!-- 블로그 카테고리 설정 -->
+	<resultMap id="categoryResultMap" type="categoryvo">
+	    <result property="id" column="id" />
+	    <result property="name" column="name" />
+	    <result property="description" column="description" />
+	    <result property="blogId" column="blog_id" />
+	</resultMap>
+	
+	<insert id="insertCategory" parameterType="categoryvo">
+		<![CDATA[
+			insert into category(name, description, blog_id)
+			values (#{name}, #{description}, #{blogId})
+		]]>				
+	</insert>	
+	
+	<select id="findCategoriesByBlogId" parameterType="String" resultMap="categoryResultMap">
+		<!-- @@@@@@@ 여기서 나중에 포스트 수도 계산해서 받아와야한다. -->
+		<![CDATA[
+			select id, name, description
+			from category
+			where blog_id=#{blogId}
+			order by id desc
+		]]>		
+	</select>	
+	
+	<delete id="deleteCategoryById" parameterType="int">
+		<!-- @@@@@@@ 여기서 나중에 카테고리 안의 글이 남아있을때의 처리 해줘야 한다. -->
+		<![CDATA[
+			delete from category
+			where id = #{id}
+		]]>				
+	</delete>
+	
+	<select id="findDefaultCategoryByBlogId" parameterType="String" resultMap="categoryResultMap">
+		<![CDATA[
+			select id
+			from category
+			where blog_id=#{blogId} and name="미분류"
+		]]>		
+	</select>		
+	
+	<!-- 블로그 글 작성 -->	
+	<insert id="insertPost" parameterType="postvo">
+		<![CDATA[
+			insert into post(title, contents, reg_date, category_id)
+			values (#{title}, #{contents}, now(), #{categoryId})
+		]]>				
+	</insert>
+
+	<!-- 블로그 메인 -->
+	<resultMap id="postResultMap" type="postvo">
+	    <result property="id" column="id" />
+	    <result property="title" column="title" />
+	    <result property="contents" column="contents" />
+	    <result property="regDate" column="reg_date" />
+	    <result property="categoryId" column="category_id" />
+	</resultMap>
+	
+	<select id="findPostsByBlogId" parameterType="String" resultMap="postResultMap">
+		<![CDATA[
+			select p.id, p.title, date_format(p.reg_date, '%Y-%m-%d') as reg_date
+			from post p join category c
+				on p.category_id = c.id
+			where c.blog_id = #{blogId}
+			order by p.reg_date desc
+		]]>		
+	</select>	
+	
+	<select id="findPostByBlogIdAndId" parameterType="map" resultType="postvo">
+	    <choose>
+	        <when test="id == 0">
+	            <![CDATA[
+	            select p.id, p.title, p.contents
+	            from post p join category c 
+	            	on p.category_id = c.id
+	            where c.blog_id = #{blogId} and p.id = (select max(p2.id)
+								                        from post p2 join category c2 
+								                        	on p2.category_id = c2.id
+								                        where c2.blog_id = #{blogId})
+	            ]]>
+	        </when>
+	        <otherwise>
+	            <![CDATA[
+	            select p.id, p.title, p.contents
+	            from post p join category c 
+	            	on p.category_id = c.id
+	            where c.blog_id = #{blogId} and p.id = #{id}
+	            ]]>
+	        </otherwise>
+	    </choose>
+	</select>	
 	
 </mapper>

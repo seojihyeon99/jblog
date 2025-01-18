@@ -1,16 +1,26 @@
 package jblog.dto;
 
 public class JsonResult {
-	private String result;
-	private Object data;
-	private String message;
+	private String result;	// "success" of "fail"
+	private Object data;	// if success, set
+	private String message;	// if fail, set
 	
 	public static JsonResult success(Object data) {
 		return new JsonResult(data);
 	}
+	
+	public static JsonResult success() {
+		return new JsonResult();
+	}
 
 	public static JsonResult fail(String message) {
 		return new JsonResult(message);
+	}
+
+	private JsonResult() {
+		this.result = "success";
+		this.data = null;
+		this.message = null;
 	}
 	
 	private JsonResult(Object data) {

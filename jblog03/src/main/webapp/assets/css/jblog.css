@@ -82,6 +82,9 @@ div#content .blog-list		{ margin:20px 0 10px 10px }
 div#content .admin-menu					{ height:20px; margin-top:15px; margin-bottom:10px }
 div#content .admin-menu li				{ float:left; margin-left:10px; }
 div#content .admin-menu li.selected		{ font-weight:bold }
+/* 
+div#content .admin-menu li.selected a   { color: #111; text-decoration: none; font-weight: bold; cursor: text }
+ */
 div#content .admin-menu li:first-child	{ margin-left:0 }
 div#content .admin-menu a				{ font-weight:bold }
 

@@ -3,6 +3,7 @@ package jblog.vo;
 public class CategoryVo {
 	private Integer id;
 	private String name;
+//	private String count;
 	private String description;
 	private String blogId;
 	
@@ -18,6 +19,12 @@ public class CategoryVo {
 	public void setName(String name) {
 		this.name = name;
 	}
+//	public String getCount() {
+//		return count;
+//	}
+//	public void setCount(String count) {
+//		this.count = count;
+//	}
 	public String getDescription() {
 		return description;
 	}
@@ -35,5 +42,11 @@ public class CategoryVo {
 	public String toString() {
 		return "CategoryVo [id=" + id + ", name=" + name + ", description=" + description + ", blogId=" + blogId + "]";
 	}
+	
+//	@Override
+//	public String toString() {
+//		return "CategoryVo [id=" + id + ", name=" + name + ", count=" + count + ", description=" + description
+//				+ ", blogId=" + blogId + "]";
+//	}
 	
 }

@@ -23,7 +23,7 @@ public class UserService {
 		
 		// 회원가입 시, 해당 사용자의 블로그가 생성됨
 		if(count == 1) {
-			blogRepository.insert(vo.getId());
+			blogRepository.insert(vo.getId(), vo.getName());
 		}
 	}
 

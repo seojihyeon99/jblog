@@ -3,7 +3,7 @@ package jblog.vo;
 public class PostVo {
 	private Integer id;
 	private String title;
-	private String contexts;
+	private String contents;
 	private String regDate;
 	private Integer categoryId;
 	
@@ -19,11 +19,11 @@ public class PostVo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getContexts() {
-		return contexts;
+	public String getContents() {
+		return contents;
 	}
-	public void setContexts(String contexts) {
-		this.contexts = contexts;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 	public String getRegDate() {
 		return regDate;
@@ -40,7 +40,7 @@ public class PostVo {
 	
 	@Override
 	public String toString() {
-		return "PostVo [id=" + id + ", title=" + title + ", contexts=" + contexts + ", regDate=" + regDate
+		return "PostVo [id=" + id + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate
 				+ ", categoryId=" + categoryId + "]";
 	}
 	
