@@ -45,8 +45,15 @@ $(function(){
 		// data-* 속성값 가져오기
 		var categoryId = $(this).data("id");
 		var name = $(this).data("name");
-		console.log(categoryId + " " + name);
 		
+		// 사용자 확인 메시지
+		 var confirmDelete = confirm(
+		     "[" + name + "] 카테고리에 속한 모든 글이 삭제됩니다.\n정말 삭제하시겠습니까?"
+		 );
+		 if (!confirmDelete) {
+		     return;
+		 }
+		 
 		$.ajax({
 			url: `${contextPath}/${blogId}/admin/category?categoryId=${categoryId}`,
 			type: "delete",

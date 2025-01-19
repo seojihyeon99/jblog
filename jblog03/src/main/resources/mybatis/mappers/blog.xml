@@ -57,9 +57,15 @@
 			order by c.id desc
 		]]>		
 	</select>	
+
+	<delete id="deletePostsByCategoryId" parameterType="int">
+		<![CDATA[
+			delete from post
+			where category_id = #{categoryId}
+		]]>				
+	</delete>
 	
 	<delete id="deleteCategoryById" parameterType="int">
-		<!-- @@@@@@@ 여기서 나중에 카테고리 안의 글이 남아있을때의 처리 해줘야 한다. -->
 		<![CDATA[
 			delete from category
 			where id = #{id}

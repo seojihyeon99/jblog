@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jblog.repository.BlogRepository;
 import jblog.vo.BlogVo;
@@ -36,11 +37,17 @@ public class BlogService {
 		return blogRepository.findCategoriesByBlogId(blogId);
 	}
 	
+	@Transactional
 	public int deleteCategory(int id) {
+		// 해당 카테고리 하위의 모든 글 삭제
+		blogRepository.deletePostsByCategoryId(id);
+		
+		// 해당 카테고리 삭제
 		return blogRepository.deleteCategoryById(id);
 	}
 	
 	/* 블로그 글 작성 */
+	@Transactional
 	public int addPost(String blogId, PostVo postVo) {
 		// 카테고리가 없는 경우
 		if(postVo.getCategoryId() == null || postVo.getCategoryId().equals("")) {
