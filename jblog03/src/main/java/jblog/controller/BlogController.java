@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.ServletContext;
+import jblog.interceptor.Auth;
 import jblog.repository.BlogRepository;
 import jblog.service.BlogService;
 import jblog.service.FileUploadService;
@@ -71,16 +72,12 @@ public class BlogController {
 		List<PostVo> posts = blogService.getPosts(blogId, categoryId);
 		model.addAttribute("posts", posts);			
 		
-		
-		// 서비스에서~@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-		// categoryId == 0L -> default categoryId 결정
-		// postId == 0L -> default postId 결정
-		
 		return "blog/main";
 	}
 	
 	
 	/* 블로그 기본 설정 */
+	@Auth
 	@GetMapping("/admin/basic")
 	public String adminDefault(@PathVariable("blogId") String blogId, Model model) {
 		// 블로그 기본 설정
@@ -90,6 +87,7 @@ public class BlogController {
 		return "blog/admin-basic";
 	}
 	
+	@Auth
 	@PostMapping("/admin/basic")
 	public String adminDefault(@PathVariable("blogId") String blogId, BlogVo blogVo, @RequestParam("logo-file") MultipartFile multipartFile) {
 		String profile = fileUploadService.restore(multipartFile);
@@ -109,6 +107,7 @@ public class BlogController {
 	}	
 
 	/* 블로그 카테고리 설정 */
+	@Auth
 	@GetMapping("/admin/category")
 	public String adminCategory(@PathVariable("blogId") String blogId, Model model) {
 		// 블로그 기본 설정
@@ -122,6 +121,7 @@ public class BlogController {
 	}
 	
 	/* 블로그 글 작성 */
+	@Auth
 	@GetMapping("/admin/write")
 	public String adminWrite(@PathVariable("blogId") String blogId, Model model) {
 		// 블로그 기본 설정
@@ -134,14 +134,12 @@ public class BlogController {
 		return "blog/admin-write";
 	}
 	
+	@Auth
 	@PostMapping("/admin/write")
 	public String adminWrite(@PathVariable("blogId") String blogId, PostVo postVo) {
 		blogService.addPost(blogId, postVo);
 				
 		return "redirect:/" + blogId + "/admin/write";
 	}
-	
-	/* 블로그 메인 */
-	
 	
 }

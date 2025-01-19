@@ -27,6 +27,18 @@
 			<mvc:mapping path="/user/login" />
 			<bean class="jblog.interceptor.LoginInterceptor" />
 		</mvc:interceptor>		
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout"/>
+			<bean class="jblog.interceptor.LogoutInterceptor"/>
+		</mvc:interceptor>			
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/user/join"/>
+			<mvc:exclude-mapping path="/user/login"/>
+			<mvc:exclude-mapping path="/user/logout"/>
+			<mvc:exclude-mapping path="/assets/**"/>
+			<bean class="jblog.interceptor.AuthInterceptor" />
+		</mvc:interceptor>		
 	</mvc:interceptors>
 		
 	<!-- View Resolver -->

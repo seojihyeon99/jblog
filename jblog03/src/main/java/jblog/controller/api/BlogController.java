@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jblog.dto.JsonResult;
+import jblog.interceptor.Auth;
 import jblog.service.BlogService;
 import jblog.vo.CategoryVo;
 
@@ -23,6 +24,7 @@ public class BlogController {
 	}
 
 	/* 블로그 카테고리 설정 */
+	@Auth
 	@PostMapping("/admin/category")
 	public JsonResult adminCategory(@PathVariable("blogId") String blogId, @RequestBody CategoryVo vo) {
 		vo.setBlogId(blogId);
@@ -31,6 +33,7 @@ public class BlogController {
 		return JsonResult.success();
 	}	
 	
+	@Auth
 	@DeleteMapping("/admin/category")
 	public JsonResult adminCategory(@PathVariable("blogId") String blogId, @RequestParam("categoryId") int categoryId) {
 		blogService.deleteCategory(categoryId);
