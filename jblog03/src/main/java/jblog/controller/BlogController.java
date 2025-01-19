@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.ServletContext;
 import jblog.interceptor.Auth;
-import jblog.repository.BlogRepository;
 import jblog.service.BlogService;
 import jblog.service.FileUploadService;
 import jblog.vo.BlogVo;
@@ -59,6 +58,9 @@ public class BlogController {
 		
 		// 블로그 기본 설정
 		BlogVo blogVo = blogService.getBlog(blogId);
+		if(blogVo == null) {
+			model.addAttribute("error", "blogNotFound");
+		}
 		model.addAttribute("blog", blogVo);
 		
 		// 블로그 카테고리 목록
@@ -82,6 +84,9 @@ public class BlogController {
 	public String adminDefault(@PathVariable("blogId") String blogId, Model model) {
 		// 블로그 기본 설정
 		BlogVo blogVo = blogService.getBlog(blogId);
+		if(blogVo == null) {
+			model.addAttribute("error", "blogNotFound");
+		}
 		model.addAttribute("blog", blogVo);
 		
 		return "blog/admin-basic";
@@ -112,6 +117,9 @@ public class BlogController {
 	public String adminCategory(@PathVariable("blogId") String blogId, Model model) {
 		// 블로그 기본 설정
 		BlogVo blogVo = blogService.getBlog(blogId);
+		if(blogVo == null) {
+			model.addAttribute("error", "blogNotFound");
+		}
 		model.addAttribute("blog", blogVo);
 		
 		List<CategoryVo> list = blogService.getCategories(blogId);
@@ -126,6 +134,9 @@ public class BlogController {
 	public String adminWrite(@PathVariable("blogId") String blogId, Model model) {
 		// 블로그 기본 설정
 		BlogVo blogVo = blogService.getBlog(blogId);
+		if(blogVo == null) {
+			model.addAttribute("error", "blogNotFound");
+		}
 		model.addAttribute("blog", blogVo);
 		
 		List<CategoryVo> list = blogService.getCategories(blogId);
