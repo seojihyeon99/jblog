@@ -119,6 +119,13 @@
 			<version>4.0.0</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- hibernate validator -->
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-validator</artifactId>
+		   <version>8.0.0.Final</version>
+		</dependency>		
 	</dependencies>
 
 	<build>

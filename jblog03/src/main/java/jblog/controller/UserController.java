@@ -3,12 +3,16 @@ package jblog.controller;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.validation.Valid;
 import jblog.dto.JsonResult;
 import jblog.service.UserService;
 import jblog.vo.UserVo;
@@ -28,8 +32,12 @@ public class UserController {
 	}
 	
 	@PostMapping("join")
-	public String join(UserVo vo) {
-		System.out.println("UserController.join에서 호출함===== " + vo);
+	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAllAttributes(result.getModel());
+			return "user/join";
+		}
+		
 		userService.join(vo);
 		
 		return "redirect:/user/joinsuccess";
