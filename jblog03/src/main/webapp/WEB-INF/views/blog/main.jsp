@@ -2,6 +2,7 @@
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<% pageContext.setAttribute( "newLine", "\n" ); %>
 <!doctype html>
 <html>
 <head>
@@ -18,7 +19,7 @@
 				<div class="blog-content">
 					<h4>${postDetail.title}</h4>
 					<p>
-						${postDetail.contents}
+						${fn:replace(postDetail.contents, newLine, "<br>")}
 					<p>
 				</div>
 				<ul class="blog-list">
