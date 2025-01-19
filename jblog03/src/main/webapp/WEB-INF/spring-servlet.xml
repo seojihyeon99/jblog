@@ -20,10 +20,6 @@
 	<!-- Interceptors -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/user/join" />
-			<bean class="jblog.interceptor.JoinInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
 			<mvc:mapping path="/user/login" />
 			<bean class="jblog.interceptor.LoginInterceptor" />
 		</mvc:interceptor>		
