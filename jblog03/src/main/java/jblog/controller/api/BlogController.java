@@ -1,6 +1,7 @@
 package jblog.controller.api;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,4 +37,7 @@ public class BlogController {
 		
 		return JsonResult.success();
 	}
+	
+//	/* 블로그 메인 글 상세 */
+//	@GetMapping("/")
 }

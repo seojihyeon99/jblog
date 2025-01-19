@@ -22,10 +22,10 @@
 			      			<td class="t">제목</td>
 			      			<td>
 			      				<input type="text" size="60" name="title">
-				      			<select name="category">
+				      			<select name="categoryId">
 				      				<option>미분류</option>
 						      		<c:forEach items="${list}" var="item" varStatus="status">
-						      			<option data-id="${item.id}">${item.name}</option>
+						      			<option value="${item.id}" data-id="${item.id}">${item.name}</option>
 						      		</c:forEach>
 				      			</select>
 				      		</td>

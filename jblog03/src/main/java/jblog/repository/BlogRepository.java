@@ -54,8 +54,8 @@ public class BlogRepository {
 	}
 	
 	/* 블로그 메인 */
-	public List<PostVo> findPostsByBlogId(String blogId) {
-		return sqlSession.selectList("blog.findPostsByBlogId", blogId);
+	public List<PostVo> findPostsByBlogIdAndCategoryId(String blogId, int categoryId) {
+		return sqlSession.selectList("blog.findPostsByBlogIdAndCategoryId", Map.of("blogId", blogId, "categoryId", categoryId));
 	}
 	
 	public PostVo findPostById(String blogId, int id) {

@@ -65,8 +65,8 @@ public class BlogService {
 	}
 	
 	/* 블로그 메인 */
-	public List<PostVo> getPosts(String blogId) {
-		return blogRepository.findPostsByBlogId(blogId);
+	public List<PostVo> getPosts(String blogId, int categoryId) {
+		return blogRepository.findPostsByBlogIdAndCategoryId(blogId, categoryId);
 	}
 	
 	public PostVo getPost(String blogId, int id) {

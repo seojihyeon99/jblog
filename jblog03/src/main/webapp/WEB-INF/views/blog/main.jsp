@@ -27,7 +27,7 @@
 					</c:if>
 					<c:if test="${not empty posts}">
 						<c:forEach items="${posts}" var="post">
-							<li><a href="">${post.title}</a><span>${post.regDate}</span></li>				
+							<li><a href="${pageContext.request.contextPath}/${blog.blogId}/${post.categoryId}/${post.id}">${post.title}</a><span>${post.regDate}</span></li>				
 						</c:forEach>
 					</c:if>
 				</ul>
@@ -44,7 +44,7 @@
 			<h2>카테고리</h2>
 			<ul>
 				<c:forEach items="${categories}" var="category">
-					<li><a href="#">${category.name}</a></li>
+					<li><a href="${pageContext.request.contextPath}/${blog.blogId}/${category.id}">${category.name}</a></li>
 				</c:forEach>
 			</ul>
 		</div>

@@ -90,12 +90,19 @@
 	    <result property="categoryId" column="category_id" />
 	</resultMap>
 	
-	<select id="findPostsByBlogId" parameterType="String" resultMap="postResultMap">
+	<select id="findPostsByBlogIdAndCategoryId" parameterType="map" resultMap="postResultMap">
 		<![CDATA[
-			select p.id, p.title, date_format(p.reg_date, '%Y-%m-%d') as reg_date
+			select p.id, p.title, date_format(p.reg_date, '%Y-%m-%d') as reg_date, p.category_id
 			from post p join category c
 				on p.category_id = c.id
 			where c.blog_id = #{blogId}
+		]]>		
+		<if test="categoryId != 0">
+			<![CDATA[
+            	and p.category_id = #{categoryId}
+            ]]>			
+       	</if>
+       	<![CDATA[
 			order by p.reg_date desc
 		]]>		
 	</select>	

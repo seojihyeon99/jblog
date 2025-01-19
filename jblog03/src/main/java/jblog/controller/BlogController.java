@@ -37,6 +37,7 @@ public class BlogController {
 		this.applicationContext = applicationContext;
 	}
 
+	// blogId/categoryId/postId
 	@RequestMapping({"", "/{path1}", "/{path1}/{path2}"})
 	public String main(
 			@PathVariable("blogId") String blogId, 
@@ -53,6 +54,7 @@ public class BlogController {
 		} else if(path1.isPresent()) {
 			categoryId = path1.get();
 		}
+		System.out.println("blogId : " + blogId + ", categoryId : " + categoryId + ", postId : " + postId);
 		
 		// @@@@@@@@@@@ 블로그 제목은 나중에 aop로 처리 할 수 있을듯
 		// 블로그 기본 설정
@@ -64,11 +66,12 @@ public class BlogController {
 		model.addAttribute("categories", categories);
 		
 		// 블로그 글 목록 및 상세
-		List<PostVo> posts = blogService.getPosts(blogId);
-		model.addAttribute("posts", posts);
-		
 		PostVo postVo = blogService.getPost(blogId, postId);
 		model.addAttribute("postDetail", postVo);
+		
+		List<PostVo> posts = blogService.getPosts(blogId, categoryId);
+		model.addAttribute("posts", posts);			
+		
 		
 		// 서비스에서~@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		// categoryId == 0L -> default categoryId 결정
