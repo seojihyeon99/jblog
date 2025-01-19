@@ -69,7 +69,7 @@ public class BlogService {
 		return blogRepository.findPostsByBlogIdAndCategoryId(blogId, categoryId);
 	}
 	
-	public PostVo getPost(String blogId, int id) {
-		return blogRepository.findPostById(blogId, id);
+	public PostVo getPost(String blogId, int categoryId, int postId) {
+		return blogRepository.findPost(blogId, categoryId, postId);
 	}
 }

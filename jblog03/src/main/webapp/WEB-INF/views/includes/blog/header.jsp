@@ -3,7 +3,7 @@
 <%@ taglib uri="jakarta.tags.functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="header">
-	<h1>${blog.title}</h1>
+	<h1><a href="${pageContext.request.contextPath}/${blog.blogId}" style="color:#fff">${blog.title}</a></h1>
 	<ul>
 		<c:choose>
 			<c:when test="${empty user}">

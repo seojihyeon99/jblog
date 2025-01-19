@@ -58,8 +58,8 @@ public class BlogRepository {
 		return sqlSession.selectList("blog.findPostsByBlogIdAndCategoryId", Map.of("blogId", blogId, "categoryId", categoryId));
 	}
 	
-	public PostVo findPostById(String blogId, int id) {
-		return sqlSession.selectOne("blog.findPostByBlogIdAndId", Map.of("blogId", blogId, "id", id));
+	public PostVo findPost(String blogId, int categoryId, int postId) {
+		return sqlSession.selectOne("blog.findPost", Map.of("blogId", blogId, "categoryId", categoryId, "postId", postId));
 	}
 	
 }

@@ -3,6 +3,7 @@ package jblog.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,9 +55,7 @@ public class BlogController {
 		} else if(path1.isPresent()) {
 			categoryId = path1.get();
 		}
-		System.out.println("blogId : " + blogId + ", categoryId : " + categoryId + ", postId : " + postId);
 		
-		// @@@@@@@@@@@ 블로그 제목은 나중에 aop로 처리 할 수 있을듯
 		// 블로그 기본 설정
 		BlogVo blogVo = blogService.getBlog(blogId);
 		model.addAttribute("blog", blogVo);
@@ -66,7 +65,7 @@ public class BlogController {
 		model.addAttribute("categories", categories);
 		
 		// 블로그 글 목록 및 상세
-		PostVo postVo = blogService.getPost(blogId, postId);
+		PostVo postVo = blogService.getPost(blogId, categoryId, postId);
 		model.addAttribute("postDetail", postVo);
 		
 		List<PostVo> posts = blogService.getPosts(blogId, categoryId);
@@ -82,9 +81,9 @@ public class BlogController {
 	
 	
 	/* 블로그 기본 설정 */
-	// @@@@@@@@@@@@@@@@@ @Auth 추천
 	@GetMapping("/admin/basic")
 	public String adminDefault(@PathVariable("blogId") String blogId, Model model) {
+		// 블로그 기본 설정
 		BlogVo blogVo = blogService.getBlog(blogId);
 		model.addAttribute("blog", blogVo);
 		
@@ -104,7 +103,7 @@ public class BlogController {
 		servletContext.setAttribute("blog", blogVo);
 		
 		// Application Context 업데이트 => Service 및 Repository
-//		BeanUtils.copyProperties(blogVo, applicationContext.getBean(BlogVo.class));
+		BeanUtils.copyProperties(blogVo, applicationContext.getBean(BlogVo.class));
 		
 		return "redirect:/" + blogId + "/admin/basic";
 	}	
@@ -112,6 +111,10 @@ public class BlogController {
 	/* 블로그 카테고리 설정 */
 	@GetMapping("/admin/category")
 	public String adminCategory(@PathVariable("blogId") String blogId, Model model) {
+		// 블로그 기본 설정
+		BlogVo blogVo = blogService.getBlog(blogId);
+		model.addAttribute("blog", blogVo);
+		
 		List<CategoryVo> list = blogService.getCategories(blogId);
 		
 		model.addAttribute("list", list);
@@ -121,6 +124,10 @@ public class BlogController {
 	/* 블로그 글 작성 */
 	@GetMapping("/admin/write")
 	public String adminWrite(@PathVariable("blogId") String blogId, Model model) {
+		// 블로그 기본 설정
+		BlogVo blogVo = blogService.getBlog(blogId);
+		model.addAttribute("blog", blogVo);
+		
 		List<CategoryVo> list = blogService.getCategories(blogId);
 		
 		model.addAttribute("list", list);

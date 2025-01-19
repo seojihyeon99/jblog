@@ -107,9 +107,10 @@
 		]]>		
 	</select>	
 	
-	<select id="findPostByBlogIdAndId" parameterType="map" resultType="postvo">
+	<select id="findPost" parameterType="map" resultType="postvo">
 	    <choose>
-	        <when test="id == 0">
+	    	<!-- 처음 메인 화면 -->
+	        <when test="categoryId == 0 and postId == 0">
 	            <![CDATA[
 	            select p.id, p.title, p.contents
 	            from post p join category c 
@@ -120,12 +121,28 @@
 								                        where c2.blog_id = #{blogId})
 	            ]]>
 	        </when>
+		    <!-- 카테고리 선택 메인 화면 -->
+		    <when test="categoryId != 0 and postId == 0">
+		        <![CDATA[
+		        select p.id, p.title, p.contents
+		        from post p join category c 
+		            on p.category_id = c.id
+		        where c.blog_id = #{blogId} and c.id = #{categoryId} 
+		            and p.id = (
+		                select max(p2.id)
+		                from post p2 join category c2 
+		                    on p2.category_id = c2.id
+		                where c2.blog_id = #{blogId} and c2.id = #{categoryId}
+		            )
+		        ]]>
+		    </when>
+		    <!-- 글 선택 했을때 화면 -->        
 	        <otherwise>
 	            <![CDATA[
 	            select p.id, p.title, p.contents
 	            from post p join category c 
 	            	on p.category_id = c.id
-	            where c.blog_id = #{blogId} and p.id = #{id}
+	            where c.blog_id = #{blogId} and p.id = #{postId}
 	            ]]>
 	        </otherwise>
 	    </choose>

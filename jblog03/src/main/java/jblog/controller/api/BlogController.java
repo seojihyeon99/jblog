@@ -38,6 +38,4 @@ public class BlogController {
 		return JsonResult.success();
 	}
 	
-//	/* 블로그 메인 글 상세 */
-//	@GetMapping("/")
 }
