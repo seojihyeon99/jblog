@@ -140,6 +140,13 @@ public class BlogController {
 		model.addAttribute("blog", blogVo);
 		
 		List<CategoryVo> list = blogService.getCategories(blogId);
+		// 미분류 카테고리는 제외
+		for(CategoryVo vo : list) {
+			if("미분류".equals(vo.getName())) {
+				list.remove(vo);
+				break;
+			}
+		}
 		
 		model.addAttribute("list", list);
 		return "blog/admin-write";

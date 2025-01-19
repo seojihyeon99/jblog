@@ -35,7 +35,7 @@
 						<tr>
 							<td>${count-status.index}</td>
 							<td>${item.name}</td>
-							<td>1(수정 필요!!)</td>
+							<td>${item.count}</td>
 							<td>${item.description}</td>
 							<td><img class="btn-deleteCategory" src="${pageContext.request.contextPath}/assets/images/delete.jpg" data-id="${item.id}" data-name="${item.name}" ></td>
 						</tr>  

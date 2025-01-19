@@ -43,7 +43,7 @@ public class BlogService {
 	/* 블로그 글 작성 */
 	public int addPost(String blogId, PostVo postVo) {
 		// 카테고리가 없는 경우
-		if(postVo.getCategoryId() == null) {
+		if(postVo.getCategoryId() == null || postVo.getCategoryId().equals("")) {
 			Optional<CategoryVo> isExist = Optional.ofNullable(blogRepository.findDefaultCategoryByBlogId(blogId));
 			
 			// 미분류 카테고리가 없는 경우 => 생성

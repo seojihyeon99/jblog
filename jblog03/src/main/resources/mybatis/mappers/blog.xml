@@ -38,6 +38,7 @@
 	    <result property="name" column="name" />
 	    <result property="description" column="description" />
 	    <result property="blogId" column="blog_id" />
+	    <result property="count" column="count" />
 	</resultMap>
 	
 	<insert id="insertCategory" parameterType="categoryvo">
@@ -48,12 +49,12 @@
 	</insert>	
 	
 	<select id="findCategoriesByBlogId" parameterType="String" resultMap="categoryResultMap">
-		<!-- @@@@@@@ 여기서 나중에 포스트 수도 계산해서 받아와야한다. -->
 		<![CDATA[
-			select id, name, description
-			from category
-			where blog_id=#{blogId}
-			order by id desc
+			select c.id, c.name, c.description, 
+				(select count(*) from post p where p.category_id=c.id) as count
+			from category c
+			where c.blog_id=#{blogId}
+			order by c.id desc
 		]]>		
 	</select>	
 	

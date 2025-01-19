@@ -23,7 +23,7 @@
 			      			<td>
 			      				<input type="text" size="60" name="title">
 				      			<select name="categoryId">
-				      				<option>미분류</option>
+				      				<option value="">미분류</option>
 						      		<c:forEach items="${list}" var="item" varStatus="status">
 						      			<option value="${item.id}" data-id="${item.id}">${item.name}</option>
 						      		</c:forEach>
